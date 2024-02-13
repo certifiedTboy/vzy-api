@@ -28,7 +28,7 @@ const createUser = async (req, res, next) => {
 
 const updateUser = async (req, res, next) => {
   try {
-    const userId = req.user.id;
+    const { userId } = req.user;
     const { firstName, lastName } = req.body;
 
     const updatedUser = await updateUserData(userId, firstName, lastName);
@@ -43,8 +43,8 @@ const updateUser = async (req, res, next) => {
 
 const getCurrentUser = async (req, res, next) => {
   try {
-    const { id } = req.user;
-    const currentUser = await checkThatUserExistById(id);
+    const { userId } = req.user;
+    const currentUser = await checkThatUserExistById(userId);
 
     if (currentUser) {
       responseHandler.ok(res, currentUser, "success");

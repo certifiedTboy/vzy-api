@@ -1,4 +1,3 @@
-const express = require("express");
 const httpData = require("./constants/index");
 
 class ResponseHandler {
@@ -17,17 +16,11 @@ class ResponseHandler {
     data,
     message = httpData.responseMessage.SUCCESS
   ) {
-    res
-      .cookie(
-        "refreshToken",
-        data.userSession.userSession.refreshToken,
-        jwtTokenOptions
-      )
-      .json({
-        message: message,
-        userData: data.userData,
-        accessToken: data.userSession.accessToken,
-      });
+    res.cookie("refreshToken", data, jwtTokenOptions).json({
+      message: message,
+      userData: {},
+      accessToken: data.accessToken,
+    });
   }
 
   static clearCookie(

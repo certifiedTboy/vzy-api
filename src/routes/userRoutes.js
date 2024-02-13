@@ -30,7 +30,13 @@ router.post(
   createUser
 );
 
-router.put("/user/update", requireSignin, updateUser);
+router.put(
+  "/user/update",
+  checkUserDataInputForUpdateIsEmpty,
+  requireSignin,
+
+  updateUser
+);
 
 router.get("/me", requireSignin, getCurrentUser);
 

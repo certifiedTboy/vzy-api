@@ -55,4 +55,5 @@ module.exports = {
   createNewUser,
   checkThatUserExistById,
   updateUserData,
+  checkThatUserAlreadyExist,
 };

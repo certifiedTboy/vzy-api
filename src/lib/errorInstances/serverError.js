@@ -1,9 +1,9 @@
-const errorData = require("../constants/index");
+const httpData = require("../constants/index");
 const CustomError = require("./customError");
 
 class ServerError extends CustomError {
   constructor(message, metaData) {
-    super(errorData.httpStatusCode.SERVER_ERROR, message, metaData);
+    super(httpData.httpStatusCode.SERVER_ERROR, message, metaData);
   }
 }
 

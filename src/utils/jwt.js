@@ -2,7 +2,8 @@ const JWT = require("jsonwebtoken");
 const envVariable = require("../config/index");
 const { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET } = envVariable;
 
-const generateJWTToken = (payload, expiresIn, secret) => {
+// generate jsonwebtoken
+const generateJWTToken = async (payload, expiresIn, secret) => {
   if (!expiresIn) {
     return JWT.sign(payload, secret);
   }
@@ -10,6 +11,7 @@ const generateJWTToken = (payload, expiresIn, secret) => {
   return JWT.sign(payload, secret, { expiresIn });
 };
 
+// verify access token
 const verifyAccessToken = async (token) => {
   try {
     return JWT.verify(token, ACCESS_TOKEN_SECRET);
@@ -18,7 +20,8 @@ const verifyAccessToken = async (token) => {
   }
 };
 
-const verifyRefreshToken = async (refreshToken, sessionId) => {
+// verify refresh token
+const verifyRefreshToken = async (refreshToken) => {
   try {
     return JWT.verify(refreshToken, REFRESH_TOKEN_SECRET);
   } catch (error) {
