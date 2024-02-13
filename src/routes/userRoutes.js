@@ -4,24 +4,31 @@ const {
   updateUser,
   getCurrentUser,
 } = require("../controllers/userControllers");
-// const {
-//   checkEmailValidity,
-//   checkNameDataLength,
-//   checkUserDataInputIsEmpty,
-//   checkUserDataInputForUpdateIsEmpty,
-// } = require("../middlewares/validators/authDataValidator");
+
+// const { validateUserData } = require("../middlewares/dataValidator");
+
+const {
+  checkEmailValidity,
+  checkNameDataLength,
+  checkUserDataInputIsEmpty,
+  checkUserDataInputForUpdateIsEmpty,
+} = require("../middlewares/dataValidator");
 // const {
 //   checkUserAccountOwnership,
 //   checkUserIsAdmin,
 // } = require("../middlewares/authorization/userAuthorization");
-// const {
-//   checkVerificationDataInputIsEmpty,
-// } = require("../middlewares/validators/verificationDataValidator");
+
 const requireSignin = require("../middlewares/requireSignin");
 
 const router = express.Router();
 
-router.post("/create", createUser);
+router.post(
+  "/create",
+  checkEmailValidity,
+  checkNameDataLength,
+  checkUserDataInputIsEmpty,
+  createUser
+);
 
 router.put("/user/update", requireSignin, updateUser);
 

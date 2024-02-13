@@ -7,13 +7,18 @@ const {
 
 const createUser = async (req, res, next) => {
   try {
-    const { email, firstName, lastName } = req.body;
-    const createdUser = await createNewUser(email, firstName, lastName);
+    const { email, firstName, lastName, password } = req.body;
+    const createdUser = await createNewUser(
+      email,
+      firstName,
+      lastName,
+      password
+    );
     if (createdUser) {
       responseHandler.created(
         res,
-        createdUser,
-        `A mail has been sent to ${createdUser.email} to complete your registration process`
+        undefined,
+        "user account created successfully"
       );
     }
   } catch (error) {

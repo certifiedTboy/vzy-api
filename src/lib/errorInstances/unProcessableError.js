@@ -1,10 +1,10 @@
-const errorData = require("../constants/index");
+const httpData = require("../constants/index");
 const CustomError = require("./customError");
 
-class UnprocessableError extends CustomError {
-  constructor(message = errorData.responseMessage.ERR_UNPROCESSABLE, metaData) {
-    super(errorData.httpStatusCode.UNPROCESSABLE_ENTITY, message, metaData);
+class unProcessableError extends CustomError {
+  constructor(message = httpData.responseMessage.ERR_UNPROCESSABLE, metaData) {
+    super(httpData.httpStatusCode.UNPROCESSABLE_ENTITY, message, metaData);
   }
 }
 
-module.exports = UnprocessableError;
+module.exports = unProcessableError;

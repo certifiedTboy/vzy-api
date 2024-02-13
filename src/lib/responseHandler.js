@@ -41,19 +41,29 @@ class ResponseHandler {
     });
   }
 
-  static ok(res, data, message = K.responseMessage.OK) {
-    return ResponseHandler.send(res, httpStatusCode.SUCCESS, data, message);
+  static ok(res, data, message = httpData.responseMessage.OK) {
+    return ResponseHandler.send(
+      res,
+      httpData.httpStatusCode.SUCCESS,
+      data,
+      message
+    );
   }
 
-  static created(res, data, message = K.responseMessage.CREATED) {
-    return ResponseHandler.send(res, httpStatusCode.CREATED, data, message);
+  static created(res, data, message = httpData.responseMessage.CREATED) {
+    return ResponseHandler.send(
+      res,
+      httpData.httpStatusCode.CREATED,
+      data,
+      message
+    );
   }
 
   static authenticated(
     res,
     data,
     jwtTokenOptions,
-    message = K.responseMessage.OK
+    message = httpData.responseMessage.OK
   ) {
     return ResponseHandler.auth(res, jwtTokenOptions, data, message);
   }

@@ -1,18 +1,28 @@
 const User = require("../models/userModel");
+const { hashPassword } = require("../utils/passwordHelper");
 const unProcessableError = require("../lib/errorInstances/unProcessableError");
 const notFoundError = require("../lib/errorInstances/notFoundError");
 const conflictError = require("../lib/errorInstances/confictError");
 
-const createNewUser = async (email, firstName, lastName) => {
-  // check if user exist to avoid multiple creation of unverified accounts on multiple request
+const createNewUser = async (email, firstName, lastName, userPassword) => {
+  // check if user exist in database
   const user = await checkThatUserAlreadyExist(email);
   if (!user) {
-    const newUser = new User({ email, firstName, lastName });
+    const newUser = new User({
+      email,
+      firstName,
+      lastName,
+      password: hashPassword(userPassword),
+    });
 
     await newUser.save();
+
+    if (newUser) return newUser;
+
+    throw new unProcessableError("user creation failed");
   } else {
     // if user exist on db, and is verified, a error response is sent
-    throw new unProcessableError("This email address is already registered");
+    throw new conflictError("This email address is already registered");
   }
 };
 

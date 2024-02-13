@@ -50,6 +50,7 @@ app.use(
   })
 );
 
+// data sanitizer againt xss and sql injection attacks
 app.use(
   sanitizer.clean({
     xss: true,

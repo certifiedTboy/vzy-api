@@ -1,12 +1,12 @@
-const errorData = require("../constants/index");
+const httpData = require("../constants/index");
 const CustomError = require("./customError");
 
 class UnauthorizedError {
   constructor(
-    message = errorData.responseMessage.ERR_UNAUTHENTICATED,
+    message = httpData.responseMessage.ERR_UNAUTHENTICATED,
     metaData
   ) {
-    super(errorData.httpStatusCode.UNAUTHORIZED, message, metaData);
+    super(httpData.httpStatusCode.UNAUTHORIZED, message, metaData);
   }
 }
 
