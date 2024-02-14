@@ -1,6 +1,6 @@
 const { loginUser } = require("../services/authServices");
 const { generateAccessToken } = require("../services/refreshTokenService");
-const responseHandler = require("../lib/responseHandler");
+const ResponseHandler = require("../lib/responseHandler");
 
 const userLogin = async (req, res, next) => {
   try {
@@ -17,7 +17,7 @@ const userLogin = async (req, res, next) => {
         secure: true,
       };
 
-      responseHandler.authenticated(
+      ResponseHandler.authenticated(
         res,
         data,
         jwtTokenOptions,
@@ -42,7 +42,7 @@ const refreshTokenHandler = async (req, res, next) => {
       };
 
       // clear cookie data if refresh token validation fails
-      responseHandler.clearCookie(
+      ResponseHandler.clearCookie(
         res,
         {},
         jwtTokenOptions,
@@ -50,7 +50,7 @@ const refreshTokenHandler = async (req, res, next) => {
       );
     }
 
-    responseHandler.created(res, accessToken, "success");
+    ResponseHandler.created(res, accessToken, "success");
   } catch (error) {
     next(error);
   }
@@ -63,7 +63,7 @@ const userLogout = async (req, res, next) => {
       sameSite: "none",
       secure: true,
     };
-    responseHandler.clearCookie(res, {}, jwtTokenOptions, "logout success");
+    ResponseHandler.clearCookie(res, {}, jwtTokenOptions, "logout success");
   } catch (error) {
     next(error);
   }

@@ -1,7 +1,7 @@
 const httpData = require("../constants/index");
 const CustomError = require("./customError");
 
-class UnauthorizedError {
+class UnAuthorizedError extends CustomError {
   constructor(
     message = httpData.responseMessage.ERR_UNAUTHENTICATED,
     metaData
@@ -10,4 +10,4 @@ class UnauthorizedError {
   }
 }
 
-module.exports = UnauthorizedError;
+module.exports = UnAuthorizedError;

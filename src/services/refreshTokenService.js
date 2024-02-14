@@ -1,7 +1,6 @@
 const JWT = require("jsonwebtoken");
 const { verifyRefreshToken, generateJWTToken } = require("../utils/jwt");
-const notFoundError = require("../lib/errorInstances/notFoundError");
-const unAuthenticatedError = require("../lib/errorInstances/unAuthenticatedError");
+const NotFoundError = require("../lib/errorInstances/notFoundError");
 const envVariable = require("../config/index");
 
 const { ACCESS_TOKEN_SECRET } = envVariable;
@@ -9,7 +8,7 @@ const { ACCESS_TOKEN_SECRET } = envVariable;
 const generateAccessToken = async (refreshToken) => {
   // throw error error if not refresh is provided by client
   if (!refreshToken) {
-    throw new notFoundError("token does not exist");
+    throw new NotFoundError("token does not exist");
   }
 
   //   verify token is authentic and still valid

@@ -13,10 +13,9 @@ const {
   checkUserDataInputIsEmpty,
   checkUserDataInputForUpdateIsEmpty,
 } = require("../middlewares/dataValidator");
-// const {
-//   checkUserAccountOwnership,
-//   checkUserIsAdmin,
-// } = require("../middlewares/authorization/userAuthorization");
+const {
+  checkUserAccountOwnership,
+} = require("../middlewares/userAuthorization");
 
 const requireSignin = require("../middlewares/requireSignin");
 
@@ -34,7 +33,7 @@ router.put(
   "/user/update",
   checkUserDataInputForUpdateIsEmpty,
   requireSignin,
-
+  checkUserAccountOwnership,
   updateUser
 );
 

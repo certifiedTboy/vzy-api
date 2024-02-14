@@ -1,8 +1,8 @@
 const User = require("../models/userModel");
 const { hashPassword } = require("../utils/passwordHelper");
-const unProcessableError = require("../lib/errorInstances/unProcessableError");
-const notFoundError = require("../lib/errorInstances/notFoundError");
-const conflictError = require("../lib/errorInstances/confictError");
+const UnProcessableError = require("../lib/errorInstances/unProcessableError");
+const NotFoundError = require("../lib/errorInstances/notFoundError");
+const ConflictError = require("../lib/errorInstances/confictError");
 
 const createNewUser = async (email, firstName, lastName, userPassword) => {
   // check if user exist in database
@@ -19,10 +19,10 @@ const createNewUser = async (email, firstName, lastName, userPassword) => {
 
     if (newUser) return newUser;
 
-    throw new unProcessableError("user creation failed");
+    throw new UnProcessableError("user creation failed");
   } else {
     // if user exist on db, and is verified, a error response is sent
-    throw new conflictError("This email address is already registered");
+    throw new ConflictError("This email address is already registered");
   }
 };
 
@@ -45,7 +45,7 @@ const checkThatUserAlreadyExist = async (email) => {
 const checkThatUserExistById = async (userId) => {
   const user = await User.findById(userId).select("-password");
   if (!user) {
-    throw new notFoundError("User does not exist");
+    throw new NotFoundError("User does not exist");
   } else {
     return user;
   }

@@ -31,12 +31,6 @@ const loginUser = async (email, password) => {
   }
 };
 
-const logoutUser = async (refreshToken) => {
-  const authPayload = await verifyRefreshToken(refreshToken);
-  //   return await deleteSessionByUserId(authPayload?.id);
-};
-
 module.exports = {
   loginUser,
-  //   logoutUser,
 };

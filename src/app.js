@@ -7,6 +7,7 @@ const sanitizer = require("perfect-express-sanitizer");
 const path = require("path");
 const globalErrorHandler = require("./lib/errorInstances/globalErrorHandler");
 const apiV1 = require("./routes/apiV1");
+
 const app = express();
 
 const allowedOrigins = ["http://localhost:3000"];
@@ -41,6 +42,7 @@ app.use(
 app.use(cookieParser());
 app.use(morgan("combined"));
 app.use(cors(corsOption));
+
 app.use(express.json({ limit: expressOptions.requestSizeLimit }));
 
 app.use(

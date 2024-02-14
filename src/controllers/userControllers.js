@@ -1,9 +1,11 @@
-const responseHandler = require("../lib/responseHandler");
+const ResponseHandler = require("../lib/responseHandler");
 const {
   createNewUser,
   updateUserData,
   checkThatUserExistById,
 } = require("../services/userServices");
+
+const { verifyPayment } = require("../services/paymentServices");
 
 const createUser = async (req, res, next) => {
   try {
@@ -15,7 +17,7 @@ const createUser = async (req, res, next) => {
       password
     );
     if (createdUser) {
-      responseHandler.created(
+      ResponseHandler.created(
         res,
         undefined,
         "user account created successfully"
@@ -34,7 +36,7 @@ const updateUser = async (req, res, next) => {
     const updatedUser = await updateUserData(userId, firstName, lastName);
 
     if (updatedUser) {
-      responseHandler.ok(res, updatedUser, "user update successful");
+      ResponseHandler.ok(res, updatedUser, "user update successful");
     }
   } catch (error) {
     next(error);
@@ -47,8 +49,16 @@ const getCurrentUser = async (req, res, next) => {
     const currentUser = await checkThatUserExistById(userId);
 
     if (currentUser) {
-      responseHandler.ok(res, currentUser, "success");
+      ResponseHandler.ok(res, currentUser, "success");
     }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updatePaymentStatus = async (req, res, next) => {
+  try {
+    const result = await verifyPayment(req.body);
   } catch (error) {
     next(error);
   }
@@ -58,4 +68,5 @@ module.exports = {
   createUser,
   updateUser,
   getCurrentUser,
+  updatePaymentStatus,
 };

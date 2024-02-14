@@ -21,7 +21,8 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.2",
     "morgan": "^1.10.0",
-    "perfect-express-sanitizer": "^1.0.13"
+    "perfect-express-sanitizer": "^1.0.13",
+    "stripe": "^14.16.0"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
