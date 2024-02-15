@@ -4,17 +4,19 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const sanitizer = require("perfect-express-sanitizer");
-const path = require("path");
 const globalErrorHandler = require("./lib/errorInstances/globalErrorHandler");
+const webhookRoutes = require("./routes/webHookRoutes");
 const apiV1 = require("./routes/apiV1");
 
 const app = express();
 
+//cors allowed origins
 const allowedOrigins = ["http://localhost:3000"];
 const expressOptions = {
   urlencodExtended: true,
   requestSizeLimit: "20mb",
 };
+// cors middleware options
 const corsOption = {
   allowedHeaders: [
     "Origin",
@@ -39,10 +41,19 @@ app.use(
     crossOriginResourcePolicy: false,
   })
 );
+
 app.use(cookieParser());
 app.use(morgan("combined"));
 app.use(cors(corsOption));
 
+// stripe webhook routes middleware
+app.use(
+  "/api/v1/webhooks",
+  express.raw({ type: "application/json" }),
+  webhookRoutes
+);
+
+// express json confiiguration
 app.use(express.json({ limit: expressOptions.requestSizeLimit }));
 
 app.use(
@@ -61,10 +72,10 @@ app.use(
   })
 );
 
-app.use(express.static(path.join(process.cwd(), "public")));
 app.use("/api/v1", apiV1);
 app.use(globalErrorHandler);
 
+// base route for API health check
 app.get("/", (req, res) => {
   res.send("server is live");
 });

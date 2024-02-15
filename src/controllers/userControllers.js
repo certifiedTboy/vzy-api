@@ -58,7 +58,12 @@ const getCurrentUser = async (req, res, next) => {
 
 const updatePaymentStatus = async (req, res, next) => {
   try {
-    const result = await verifyPayment(req.body);
+    const sig = req.headers["stripe-signature"];
+    const result = await verifyPayment(req.body, sig);
+
+    if (result.received) {
+      ResponseHandler.ok(res, {}, "payment successul");
+    }
   } catch (error) {
     next(error);
   }

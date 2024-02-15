@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const { hashPassword } = require("../utils/passwordHelper");
+const { createStripeCustomer } = require("./paymentServices");
 const UnProcessableError = require("../lib/errorInstances/unProcessableError");
 const NotFoundError = require("../lib/errorInstances/notFoundError");
 const ConflictError = require("../lib/errorInstances/confictError");
@@ -16,6 +17,8 @@ const createNewUser = async (email, firstName, lastName, userPassword) => {
     });
 
     await newUser.save();
+
+    await createStripeCustomer(email);
 
     if (newUser) return newUser;
 
