@@ -11,7 +11,7 @@ const loginUser = async (email, password) => {
     verifyPassword(password, user.password);
 
     const REFRESH_TOKEN_TTL_IN_HOURS = "24h";
-    const ACCESS_TOKEN_TTL_IN_SECONDS = 60 * 60;
+    const ACCESS_TOKEN_TTL_IN_SECONDS = 60;
 
     // generate refresh token
     const REFRESH_TOKEN = await generateJWTToken(
