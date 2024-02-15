@@ -10,7 +10,10 @@ const apiV1 = require("./routes/apiV1");
 const app = express();
 
 //cors allowed origins
-const allowedOrigins = ["http://localhost:4242"];
+const allowedOrigins = [
+  "http://localhost:4242",
+  "https://vzy-webhook-server.onrender.com",
+];
 const expressOptions = {
   urlencodExtended: true,
   requestSizeLimit: "20mb",
