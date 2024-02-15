@@ -15,7 +15,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
 
 // cors options object
 const corsOptions = {
-  origin: "http://localhost:3001",
+  origin: "https://vzy-api-oux5.onrender.com",
   optionsSuccessStatus: 200,
   credentials: true,
 };
@@ -61,7 +61,7 @@ app.post("/webhook", async (req, res) => {
 
   if (eventType === "payment_intent.succeeded") {
     const response = await fetch(
-      "http://localhost:3001/api/v1/users/payment-status",
+      "https://vzy-api-oux5.onrender.com/api/v1/users/payment-status",
       {
         method: "POST",
         body: JSON.stringify({ email: "seg3son@gmail.com" }),
@@ -81,5 +81,5 @@ app.post("/webhook", async (req, res) => {
 });
 
 app.listen(4242, () =>
-  console.log(`Node server listening at http://localhost:4242`)
+  console.log(`Node server listening at https://vzy-api-oux5.onrender.com`)
 );
