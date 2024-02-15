@@ -3,6 +3,7 @@ const {
   createUser,
   updateUser,
   getCurrentUser,
+  updatePaymentStatus,
 } = require("../controllers/userControllers");
 
 // const { validateUserData } = require("../middlewares/dataValidator");
@@ -36,6 +37,8 @@ router.put(
   checkUserAccountOwnership,
   updateUser
 );
+
+router.post("/payment-status", updatePaymentStatus);
 
 router.get("/me", requireSignin, getCurrentUser);
 

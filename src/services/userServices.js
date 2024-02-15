@@ -1,6 +1,5 @@
 const User = require("../models/userModel");
 const { hashPassword } = require("../utils/passwordHelper");
-const { createStripeCustomer } = require("./paymentServices");
 const UnProcessableError = require("../lib/errorInstances/unProcessableError");
 const NotFoundError = require("../lib/errorInstances/notFoundError");
 const ConflictError = require("../lib/errorInstances/confictError");
@@ -54,9 +53,21 @@ const checkThatUserExistById = async (userId) => {
   }
 };
 
+const updateUserPaymentStatus = async (email) => {
+  const user = await User.findOne({ email });
+  if (user) {
+    user.paid = true;
+    await user.save();
+    return user;
+  }
+
+  throw new NotFoundError("User does not exist");
+};
+
 module.exports = {
   createNewUser,
   checkThatUserExistById,
   updateUserData,
   checkThatUserAlreadyExist,
+  updateUserPaymentStatus,
 };

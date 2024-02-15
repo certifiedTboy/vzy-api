@@ -5,13 +5,12 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const sanitizer = require("perfect-express-sanitizer");
 const globalErrorHandler = require("./lib/errorInstances/globalErrorHandler");
-const webhookRoutes = require("./routes/webHookRoutes");
 const apiV1 = require("./routes/apiV1");
 
 const app = express();
 
 //cors allowed origins
-const allowedOrigins = ["http://localhost:3000"];
+const allowedOrigins = ["http://localhost:4242"];
 const expressOptions = {
   urlencodExtended: true,
   requestSizeLimit: "20mb",
@@ -45,13 +44,6 @@ app.use(
 app.use(cookieParser());
 app.use(morgan("combined"));
 app.use(cors(corsOption));
-
-// stripe webhook routes middleware
-app.use(
-  "/api/v1/webhooks",
-  express.raw({ type: "application/json" }),
-  webhookRoutes
-);
 
 // express json confiiguration
 app.use(express.json({ limit: expressOptions.requestSizeLimit }));

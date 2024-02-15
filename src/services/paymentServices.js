@@ -1,10 +1,16 @@
 const envVariable = require("../config/index");
+const { updateUserPaymentStatus } = require("./userServices");
 const UnProcessableError = require("../lib/errorInstances/unProcessableError");
 
 const { STRIPE_SECRET_KEY, STRIPE_WEBHOOK_KEY } = envVariable;
 
 const stripe = require("stripe")(STRIPE_SECRET_KEY, {
-  apiVersion: "2020-08-27",
+  apiVersion: "2023-10-16",
+  appInfo: {
+    name: "vzy-api",
+    version: "1.0.0", // Optional
+    url: "https://1ed3-105-113-61-193.ngrok-free.app", // Optional
+  },
 });
 
 const paymentIntent = async () => {
@@ -24,22 +30,12 @@ const paymentIntent = async () => {
   }
 };
 
-const verifyPayment = async (bodyData, sig) => {
-  let event;
-  try {
-    event = await stripe.webhooks.constructEvent(
-      bodyData,
-      sig,
-      STRIPE_WEBHOOK_KEY
-    );
-  } catch (err) {
-    console.error(err.message);
-    // return res.status(400).send(`Webhook Error: ${err.message}`);
+const verifyPayment = async (email) => {
+  const updatedUser = await updateUserPaymentStatus(email);
+
+  if (updatedUser) {
+    return updatedUser;
   }
-
-  console.log(event);
-
-  res.status(200).json({ received: true });
 };
 
 module.exports = {
