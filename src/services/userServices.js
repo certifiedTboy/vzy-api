@@ -17,8 +17,6 @@ const createNewUser = async (email, firstName, lastName, userPassword) => {
 
     await newUser.save();
 
-    await createStripeCustomer(email);
-
     if (newUser) return newUser;
 
     throw new UnProcessableError("user creation failed");
