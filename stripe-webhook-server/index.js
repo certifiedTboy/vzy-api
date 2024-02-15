@@ -63,13 +63,16 @@ app.post("/webhook", async (req, res) => {
   }
 
   if (eventType === "payment_intent.succeeded") {
-    const response = await fetch(process.env.VZY_API_ENDPOINT, {
-      method: "POST",
-      body: JSON.stringify({ email: req.body.data.metadata.customer_email }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://vzy-webhook-server.onrender.com/api/v1/users/payment-status",
+      {
+        method: "POST",
+        body: JSON.stringify({ email: req.body.data.metadata.customer_email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     const data = await response.json();
     console.log("payment successful");
@@ -80,5 +83,7 @@ app.post("/webhook", async (req, res) => {
 });
 
 app.listen(4242, () =>
-  console.log(`Node server listening at https://vzy-api-oux5.onrender.com`)
+  console.log(
+    `Node server listening at https://vzy-webhook-server.onrender.com`
+  )
 );
