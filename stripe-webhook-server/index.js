@@ -4,14 +4,17 @@ const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2020-08-27",
-  appInfo: {
-    // For sample support and debugging, not required for production:
-    name: "vzi-api",
-    version: "0.0.2",
-  },
-});
+const stripe = require("stripe")(
+  "https://vzy-api-oux5.onrender.com/api/v1/users/payment-status",
+  {
+    apiVersion: "2020-08-27",
+    appInfo: {
+      // For sample support and debugging, not required for production:
+      name: "vzi-api",
+      version: "0.0.2",
+    },
+  }
+);
 
 // cors options object
 const corsOptions = {
@@ -60,24 +63,20 @@ app.post("/webhook", async (req, res) => {
   }
 
   if (eventType === "payment_intent.succeeded") {
-    const response = await fetch(
-      "https://vzy-api-oux5.onrender.com/api/v1/users/payment-status",
-      {
-        method: "POST",
-        body: JSON.stringify({ email: "seg3son@gmail.com" }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await fetch(process.env.VZY_API_ENDPOINT, {
+      method: "POST",
+      body: JSON.stringify({ email: req.body.data.metadata.customer_email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     const data = await response.json();
-    console.log(data);
     console.log("payment successful");
   } else if (eventType === "payment_intent.payment_failed") {
-    console.log("Payment failed.");
+    return console.log("Payment failed.");
   }
-  res.sendStatus(200);
+  return res.sendStatus(200);
 });
 
 app.listen(4242, () =>
