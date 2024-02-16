@@ -13,6 +13,9 @@ const {
   checkNameDataLength,
   checkUserDataInputIsEmpty,
   checkUserDataInputForUpdateIsEmpty,
+  checkPasswordInputIsEmpty,
+  checkPasswordValidity,
+  checkPasswordMatch,
 } = require("../middlewares/dataValidator");
 const {
   checkUserAccountOwnership,
@@ -27,6 +30,9 @@ router.post(
   checkEmailValidity,
   checkNameDataLength,
   checkUserDataInputIsEmpty,
+  checkPasswordValidity,
+  checkPasswordInputIsEmpty,
+  checkPasswordMatch,
   createUser
 );
 
