@@ -35,7 +35,6 @@ The following technologies were used:
 
 - [Node Js](#Node)
 - [JWT for handling user authentication and authorization](#JWT)
-- [Nodemailer and Elastic Mail for handling email service](#)
 - [Mongo Db for Data Persistency](#)
 
 ## Enviromental Variables
