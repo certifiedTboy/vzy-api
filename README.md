@@ -2,7 +2,6 @@
  
   &#xa0;
 
-  <!-- <a href="https://usermanagementapi.netlify.app">Demo</a> ---->
 </div>
 
 <h1 align="center">VZY Api</h1>
@@ -80,18 +79,21 @@ $ npm run dev (Development server)
 ## Authentication Flow
 
 - Authentication and Authorization is handled with Jsonwebtoken (JWT) and it follows the OAUTH flow standard
-- On successful login, an access token and a refresh token is generated, refresh token is sent as an HTTP only flagged cookie to client with a validity period of 24 hours. The access token is sent as a response data to be used for subsequent requests. The access token has a validity period of 30 Minutes. Tokens are signed with the user unique Id and user-type (ADMIN / USER)
+- On successful login, an access token and a refresh token is generated, refresh token is sent as an HTTP only flagged cookie to client with a validity period of 24 hours. The access token is sent as a response data to be used for subsequent requests. The access token has a validity period of 1minute. Tokens are signed with the user unique Id
 - All subsequent request that requires authorization must be made with the access token as authorization request header with a Bearer flag.
 - On access token expiration, a request is made to a /refresh-token endpoint with refresh token as req.cookies header.
 - If refresh token is valid and contains verifiable data, a new access token is sent back to client for subsequent request.
 - on refresh token expiration, client is required to login again to generate new refresh token and access token
-- For testing on POSTMAN agent, refer to [postman interceptor](https://learning.postman.com/docs/sending-requests/cookies/#:~:text=Postman%20can%20capture%20cookies%20for,with%20the%20Postman%20cookie%20jar.) to handle cookie
-- On frontend libraries like React, authorization with cookies are easily handled with [Redux RTK Queries](https://redux-toolkit.js.org/tutorials/rtk-query)
+- For testing on POSTMAN agent, refer to [postman interceptor](https://learning.postman.com/docs/sending-requests/cookies/#:~:text=Postman%20can%20capture%20cookies%20for,with%20the%20Postman%20cookie%20jar.)
+
+## Stripe Webhook Flow
+
+- The stripe webhook is hosted on a different server on https://vzy-webhook-server.onrender.com - that listens to all activies on stripe account. A payment must be initiated using the stripe client API or any oter available channel for the webhook to be triggered. If a payment is completed on stripe account, user email can be sent as a metadata with the webhook rquest object. The customer email is extracted from the request object after transanction event is verified and a post request is sent to the main server of the api to update customer status to paid.
 
 ## API Documentation
 
-All API http request endpoints are available on [https://documenter.getpostman.com/view/14393972/2s9XxsWcWm](https://documenter.getpostman.com/view/14393972/2s9XxsWcWm)
+All API http request endpoints are available on [https://documenter.getpostman.com/view/14393972/2sA2r6YQLY](https://documenter.getpostman.com/view/14393972/2sA2r6YQLY)
 
-Use [https://user-management-api-y41j.onrender.com/api/v1](https://user-management-api-y41j.onrender.com) for live testing
+Use [https://vzy-api-oux5.onrender.com/api/v1](https://vzy-api-oux5.onrender.com/api/v1) for live testing
 
 <a href="#top">Back to top</a>
