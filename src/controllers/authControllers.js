@@ -32,6 +32,7 @@ const userLogin = async (req, res, next) => {
 const refreshTokenHandler = async (req, res, next) => {
   try {
     const cookies = req.cookies;
+
     const accessToken = await generateAccessToken(cookies?.refreshToken || "");
 
     if (!accessToken) {

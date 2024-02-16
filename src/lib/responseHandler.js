@@ -16,7 +16,7 @@ class ResponseHandler {
     data,
     message = httpData.responseMessage.SUCCESS
   ) {
-    res.cookie("refreshToken", data, jwtTokenOptions).json({
+    res.cookie("refreshToken", data.refreshToken, jwtTokenOptions).json({
       message: message,
       userData: {},
       accessToken: data.accessToken,
