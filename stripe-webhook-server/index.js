@@ -4,17 +4,14 @@ const cors = require("cors");
 const axios = require("axios");
 require("dotenv").config();
 
-const stripe = require("stripe")(
-  process.env.STRIPE_SECRET_KEY,
-  {
-    apiVersion: "2020-08-27",
-    appInfo: {
-      // For sample support and debugging, not required for production:
-      name: "vzi-api",
-      version: "0.0.2",
-    },
-  }
-);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2020-08-27",
+  appInfo: {
+    // For sample support and debugging, not required for production:
+    name: "vzi-api",
+    version: "0.0.2",
+  },
+});
 
 // cors options object
 const corsOptions = {
@@ -63,6 +60,7 @@ app.post("/webhook", async (req, res) => {
   }
 
   if (eventType === "payment_intent.succeeded") {
+    // send http request to main api server to update user paid status
     const response = await fetch(
       "https://vzy-webhook-server.onrender.com/api/v1/users/payment-status",
       {
@@ -81,7 +79,7 @@ app.post("/webhook", async (req, res) => {
   } else if (eventType === "payment_intent.payment_failed") {
     return console.log("Payment failed.");
   }
-  return res.sendStatus(200);
+  return res.status(200).send({ received: true });
 });
 
 app.listen(4242, () =>
