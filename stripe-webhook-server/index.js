@@ -67,7 +67,9 @@ app.post("/webhook", async (req, res) => {
       "https://vzy-webhook-server.onrender.com/api/v1/users/payment-status",
       {
         method: "POST",
-        body: JSON.stringify({ email: req.body.data.metadata.customer_email }),
+        body: JSON.stringify({
+          email: req.body.data.metadata.customer_email || "etosin70@gmail.com",
+        }),
         headers: {
           "Content-Type": "application/json",
         },
