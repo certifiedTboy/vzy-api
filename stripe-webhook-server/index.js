@@ -5,7 +5,7 @@ const axios = require("axios");
 require("dotenv").config();
 
 const stripe = require("stripe")(
-  "https://vzy-api-oux5.onrender.com/api/v1/users/payment-status",
+  process.env.STRIPE_SECRET_KEY,
   {
     apiVersion: "2020-08-27",
     appInfo: {
